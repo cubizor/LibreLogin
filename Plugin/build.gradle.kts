@@ -7,6 +7,14 @@ plugins {
     id("java-library")
     id("xyz.kyngs.libby.plugin").version("1.2.1")
     id("xyz.kyngs.mcupload.plugin").version("0.3.4")
+    // Cubizor fork: publish the shaded jar to Tessera (R2 / local overlay).
+    id("io.tessera.minecraft.publish") version "1.40.1"
+}
+
+// Tessera publish: `./gradlew :Plugin:publishToR2` / `publishLocal`.
+tesseraPublish {
+    artifactName = "librelogin"
+    jarTask = tasks.shadowJar
 }
 
 tasks.withType<JavaCompile> {
