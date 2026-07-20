@@ -72,6 +72,18 @@ public class AuthenticListeners<Plugin extends AuthenticLibreLogin<P, S>, P, S> 
     }
 
     protected PreLoginResult onPreLogin(String username, InetAddress address) {
+        // Checked before anything else, so that a brute-force attempt costs us neither a database
+        // lookup nor a call to the Mojang API.
+        var loginTryListener = plugin.getLoginTryListener();
+        if (loginTryListener != null) {
+            var remainingBan = loginTryListener.getRemainingBanSeconds(loginTryListener.trackingKey(address.getHostAddress(), username));
+            if (remainingBan > 0) {
+                return new PreLoginResult(PreLoginState.DENIED, plugin.getMessages().getMessage("kick-banned-brute-force",
+                        "%seconds%", String.valueOf(remainingBan)
+                ), null);
+            }
+        }
+
         if (username.length() > 16 || !NAME_PATTERN.matcher(username).matches()) {
             return new PreLoginResult(PreLoginState.DENIED, plugin.getMessages().getMessage("kick-illegal-username"), null);
         }

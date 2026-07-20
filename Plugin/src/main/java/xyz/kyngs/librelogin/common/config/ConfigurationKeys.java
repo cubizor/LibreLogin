@@ -112,6 +112,27 @@ public class ConfigurationKeys {
             ConfigurateHelper::getInt
     );
 
+    public static final ConfigurationKey<Integer> LOGIN_ATTEMPTS_BAN_SECONDS = new ConfigurationKey<>(
+            "login-attempts-ban-seconds",
+            -1,
+            """
+                    How long should the player be denied from reconnecting after exhausting "max-login-attempts". Set to zero or less to disable, in which case the player is only kicked and may reconnect immediately.
+                    The ban is held in memory only; it is lost when the proxy restarts.
+                    """,
+            ConfigurateHelper::getInt
+    );
+
+    public static final ConfigurationKey<Boolean> LOGIN_ATTEMPTS_BAN_BY_IP = new ConfigurationKey<>(
+            "login-attempts-ban-by-ip",
+            true,
+            """
+                    Should login attempts and bans be tracked per IP address instead of per nickname?
+                    Tracking per IP is the only way to actually stop a brute-force attack, since an attacker can otherwise simply switch nicknames to get a fresh quota.
+                    Beware, that players sharing an IP address (household, school, VPN) will lock each other out.
+                    """,
+            ConfigurateHelper::getBoolean
+    );
+
     public static final ConfigurationKey<Boolean> USE_TITLES = new ConfigurationKey<>(
             "use-titles",
             true,

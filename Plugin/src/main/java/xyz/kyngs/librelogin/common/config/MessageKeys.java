@@ -138,6 +138,13 @@ public class MessageKeys {
             ConfigurateHelper::getString
     );
 
+    public static final ConfigurationKey<String> KICK_BANNED_BRUTE_FORCE = new ConfigurationKey<>(
+            "kick-banned-brute-force",
+            "Too many wrong passwords! Please try again in %seconds% seconds.",
+            "This message is displayed when the player is denied from connecting because they exhausted their login attempts. (You can configure the ban duration in the config file)",
+            ConfigurateHelper::getString
+    );
+
     public static final ConfigurationKey<String> KICK_2FA_ENABLED = new ConfigurationKey<>(
             "kick-2fa-enabled",
             "Two-factor has been enabled! Please reconnect.",
